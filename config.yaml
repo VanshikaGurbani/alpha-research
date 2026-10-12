@@ -1,0 +1,61 @@
+# Alpha Research Pipeline Configuration
+
+data:
+  source: "yahoo"  # yahoo or csv
+  csv_path: "data/prices.csv"
+  start_date: "2020-01-01"
+  end_date: null  # null for today
+  universe: []  # empty list for all available stocks, or specify tickers
+  min_obs: 60
+  despike_threshold: 5.0  # standard deviations for spike detection
+
+factors:
+  momentum:
+    lookback: 21
+    enabled: true
+  reversal:
+    lag: 1
+    enabled: true
+  volatility:
+    window: 21
+    enabled: true
+  value:
+    enabled: true
+  quality:
+    enabled: true
+  liquidity:
+    enabled: true
+  size:
+    enabled: true
+
+portfolio:
+  long_quantile: 0.2
+  short_quantile: 0.2
+  sector_neutral: true
+  beta_neutral: true
+  max_leverage: 1.0
+  rebalance_frequency: "daily"  # daily, weekly, monthly
+
+backtest:
+  transaction_cost_bps: 10  # basis points per trade
+  turnover_penalty: 0.0  # penalty coefficient for turnover
+  annualization: 252
+
+risk_model:
+  barra_style: true
+  half_life: 60  # days for exponential weighting
+  min_periods: 60
+
+optimization:
+  ic_window: 60  # days for rolling IC calculation
+  ml_weighting: true
+  ml_model: "ridge"  # ridge, lasso, elastic_net
+  ml_retrain_frequency: 20  # days
+
+streamlit:
+  port: 8501
+  theme:
+    primary_color: "#1f77b4"
+    background_color: "#ffffff"
+    secondary_background_color: "#f0f2f6"
+
